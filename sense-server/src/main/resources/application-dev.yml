@@ -1,0 +1,8 @@
+sense:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    host: 120.46.84.131
+    port: 3306
+    database: keshihua
+    username: root
+    password: yabcd11
