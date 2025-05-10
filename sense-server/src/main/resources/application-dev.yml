@@ -6,3 +6,8 @@ sense:
     database: keshihua
     username: root
     password: yabcd11
+  redis:
+    host: 120.46.84.131
+    port: 6379
+    database: 0
+    password: yabcd11

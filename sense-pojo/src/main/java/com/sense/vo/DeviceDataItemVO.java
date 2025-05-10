@@ -11,8 +11,9 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DeviceVO implements Serializable {
-    private Integer id;
-    private String deviceName;
-    private Integer status;
+public class DeviceDataItemVO implements Serializable {
+    private String functionName;
+    //单位
+    private String unit;
+    private Double value;
 }

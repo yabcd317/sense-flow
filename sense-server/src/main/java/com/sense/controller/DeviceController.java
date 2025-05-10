@@ -1,14 +1,16 @@
 package com.sense.controller;
 
+import com.sense.entity.Device;
 import com.sense.result.Result;
 import com.sense.service.DeviceService;
+import com.sense.vo.DeviceDataVO;
 import com.sense.vo.DeviceVO;
-import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,9 +19,10 @@ import static com.sense.constant.MessageConstant.DEVICE_LIST_GET_FAILED;
 @RestController
 @RequestMapping("/senser")
 @Slf4j
-public class DeviceListController {
+public class DeviceController {
     @Autowired
     private DeviceService deviceService;
+
 
     @GetMapping("/deviceList")
     public Result<List<DeviceVO>> deviceList() {
@@ -29,4 +32,11 @@ public class DeviceListController {
         }
         return Result.success(devices);
     }
+
+    @PostMapping("/deviceData")
+    public Result<List<DeviceDataVO>> deviceData(@RequestBody  List<Integer> deviceIds) {
+        List<DeviceDataVO> deviceData = deviceService.getDeviceData(deviceIds);
+        return Result.success(deviceData);
+    }
+
 }

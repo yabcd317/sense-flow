@@ -12,6 +12,11 @@ spring:
       url: jdbc:mysql://${sense.datasource.host}:${sense.datasource.port}/${sense.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
       username: ${sense.datasource.username}
       password: ${sense.datasource.password}
+  redis:
+    host: ${sense.redis.host}
+    port: ${sense.redis.port}
+    database: ${sense.redis.database}
+    password: ${sense.redis.password}
 
 mybatis:
   #mapper配置文件
@@ -32,8 +37,11 @@ logging:
 sense:
   jwt:
     # 设置jwt签名加密时使用的秘钥
-    admin-secret-key: itcast
+    admin-secret-key: yabcd11
     # 设置jwt过期时间
-    admin-ttl: 7200000
+    admin-ttl: 7200000 #7200000为2小时
     # 设置前端传递过来的令牌名称
     admin-token-name: token
+    user-secret-key: yabcd11
+    user-ttl: 7200000
+    user-token-name: authentication

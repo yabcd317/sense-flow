@@ -6,13 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DeviceVO implements Serializable {
-    private Integer id;
-    private String deviceName;
+public class DeviceDataVO implements Serializable {
+    private Integer deviceId;
     private Integer status;
+    private List<DeviceDataItemVO> dataItems;
 }
