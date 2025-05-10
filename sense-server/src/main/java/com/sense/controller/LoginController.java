@@ -22,7 +22,7 @@ import java.util.Map;
  * 用户管理
  */
 @RestController
-@RequestMapping("/sense")
+@RequestMapping("/user")
 @Slf4j
 public class LoginController {
 

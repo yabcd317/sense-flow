@@ -9,10 +9,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class device {
+public class Device {
     private Integer id;
-    //  报警数据
+    //报警数据
     private Integer alarmRecord;
+    //在线状态
+    private Integer status;
     //设备地址
     private Integer deviceAddr;
     //设备名称
