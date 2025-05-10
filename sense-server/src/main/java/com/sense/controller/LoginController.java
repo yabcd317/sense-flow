@@ -1,8 +1,7 @@
-package com.sense.controller.admin;
+package com.sense.controller;
 
 import com.sense.constant.JwtClaimsConstant;
 import com.sense.dto.LoginDTO;
-import com.sense.entity.Employee;
 import com.sense.entity.User;
 import com.sense.properties.JwtProperties;
 import com.sense.result.Result;
