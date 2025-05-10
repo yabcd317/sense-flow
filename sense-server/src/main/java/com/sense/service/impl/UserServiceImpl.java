@@ -1,10 +1,8 @@
 package com.sense.service.impl;
 
 import com.sense.constant.MessageConstant;
-import com.sense.constant.StatusConstant;
 import com.sense.dto.LoginDTO;
 import com.sense.entity.User;
-import com.sense.exception.AccountLockedException;
 import com.sense.exception.AccountNotFoundException;
 import com.sense.exception.PasswordErrorException;
 import com.sense.mapper.UserMapper;
