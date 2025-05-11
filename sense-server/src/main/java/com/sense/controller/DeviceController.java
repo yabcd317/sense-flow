@@ -34,9 +34,15 @@ public class DeviceController {
     }
 
     @PostMapping("/deviceData")
-    public Result<List<DeviceDataVO>> deviceData(@RequestBody  List<Integer> deviceIds) {
+    public Result<List<DeviceDataVO>> deviceData(@RequestBody List<Integer> deviceIds) {
         List<DeviceDataVO> deviceData = deviceService.getDeviceData(deviceIds);
         return Result.success(deviceData);
+    }
+
+    @GetMapping("/deviceInfo/{deviceId}")
+    public Result<DeviceVO> deviceInfo(@PathVariable Integer deviceId) {
+        DeviceVO deviceVO = deviceService.getDeviceInfo(deviceId);
+        return Result.success(deviceVO);
     }
 
 }

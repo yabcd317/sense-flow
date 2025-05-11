@@ -7,4 +7,5 @@ import java.util.List;
 public interface DeviceService {
     List<DeviceVO> getDevices();
     List<DeviceDataVO> getDeviceData(List<Integer> deviceIds);
+    DeviceVO getDeviceInfo(Integer deviceId);
 }

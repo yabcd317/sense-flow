@@ -9,13 +9,11 @@ import com.sense.service.DeviceService;
 import com.sense.vo.DeviceDataItemVO;
 import com.sense.vo.DeviceDataVO;
 import com.sense.vo.DeviceVO;
-import io.lettuce.core.RedisClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -39,6 +37,12 @@ public class DeviceServiceImpl implements DeviceService {
             deviceVO.setId(device.getId());
             deviceVO.setDeviceName(device.getDeviceName());
             deviceVO.setStatus(device.getStatus());
+/*            deviceVO.setAddress(device.getDeviceAddr());
+            deviceVO.setAlarmRecord(device.getAlarmRecord());
+            deviceVO.setAlarmSwitch(device.getAlarmSwitch());
+            deviceVO.setUseMarkLocation(device.getUseMarkLocation());
+            deviceVO.setOfflineInterval(device.getOfflineInterval());
+            deviceVO.setSaveDataInterval(device.getSaveDataInterval());*/
             deviceVOS.add(deviceVO);
         }
         return deviceVOS;
@@ -80,8 +84,7 @@ public class DeviceServiceImpl implements DeviceService {
                         // 将查询到的数据封装成 DeviceDataItemVO
                         dataItems.add(new DeviceDataItemVO(sysDeviceFactor.getFactorName(), sysDeviceFactor.getUnit(), sysDeviceHistorydata.getValue()));
                     }
-                }
-                else {
+                } else {
                     dataItems.add(new DeviceDataItemVO(sysDeviceFactor.getFactorName(), sysDeviceFactor.getUnit(), null));
                 }
             }
@@ -99,5 +102,33 @@ public class DeviceServiceImpl implements DeviceService {
         }
 
         return deviceDataVOS;
+    }
+
+    @Override
+    public DeviceVO getDeviceInfo(Integer deviceId) {
+        String cacheKey = "deviceInfo::" + deviceId;
+        // 先尝试从 Redis 获取数据
+        DeviceVO cachedData = (DeviceVO) redisTemplate.opsForValue().get(cacheKey);
+        if (cachedData != null) {
+            return cachedData;
+        }
+        Device device = deviceMapper.getDeviceInfoById(deviceId);
+        if (device == null) {
+            redisTemplate.opsForValue().set(cacheKey, null, 5, TimeUnit.MINUTES);
+            return new DeviceVO();
+        }
+        DeviceVO deviceVO = DeviceVO.builder()
+                .id(deviceId)
+                .deviceName(device.getDeviceName())
+                .status(device.getStatus())
+                .address(device.getDeviceAddr())
+                .alarmRecord(device.getAlarmRecord())
+                .alarmSwitch(device.getAlarmSwitch())
+                .useMarkLocation(device.getUseMarkLocation())
+                .offlineInterval(device.getOfflineInterval())
+                .saveDataInterval(device.getSaveDataInterval()).build();
+        // 将新构建的 DeviceVO 写入 Redis 缓存，5分钟后过期
+        redisTemplate.opsForValue().set(cacheKey, deviceVO, 5, TimeUnit.MINUTES);
+        return deviceVO;
     }
 }

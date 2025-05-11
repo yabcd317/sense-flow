@@ -11,4 +11,7 @@ public interface DeviceMapper {
 
     @Select("select * from sys_device")
     List<Device> getDevices();
+
+    @Select("select * from sys_device where id = #{id}")
+    Device getDeviceInfoById(Integer id);
 }

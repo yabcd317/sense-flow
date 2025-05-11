@@ -30,5 +30,7 @@ public class Device {
     //设备编号
     private String deviceCode;
     //使用标记位置
-    private Boolean useMarkLocation;
+    private Integer useMarkLocation;
+    private Integer address;
+    private Integer alarmSwitch;
 }
